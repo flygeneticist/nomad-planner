@@ -1,35 +1,48 @@
 <head>
-  <title>Nomad Planner</title>
+    <meta charset="utf-8">
+    <title>Nomad Planner</title>
+    <link rel="stylesheet" type="text/css" href="/client/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/client/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="/client/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/client/js/jquery-2.1.3.min.js" />
 </head>
-
 <body>
     <header>
-        <nav>
-            NAV BAR, LOGO, ETC GOES IN THE HEADER!
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                Logo, sign in button, etc goes in nav bar
+            </div>
         </nav>
     </header>
-    <h1>Welcome to Nomad Planner</h1>
-    <div class="container">
+    <div class="container intro">
         <p>Nomad Planner was created after hours of fiddling with a google spreadsheet to try and plan out my trip around the world. It's my hope that this can save you some time and frustration and get you out of the planning stages sooner and on the road!</p>
         <p> With this app you can quickly and easily plan out your upcoming trip, calculate a rough cost, and share your trip with friends. We'll even let you know who you can expect to cross paths with basd on other user's trips...</p>
     </div>
     <div class="container main">
         <div class="container destinations">
-            {{> destination}}
+            <h3 class="mini-title">Destinations</h3>
+            {{#each destinations}}
+                {{> destination}}
+            {{/each}}
         </div>
         <div class="container expenses">
-            {{> expense}}
+            <h3 class="mini-title">Expenses</h3>
+            {{#each expenses}}
+                {{> expense}}
+            {{/each}}
         </div>
     </div>
     <footer>
         LEGAL STUFF, NAV LINKS, ETC GOES IN THE FOOTER!
     </footer>
+
+    <!-- Load majority of JS files at the bottom to minimize load times -->
 </body>
 
 <template name="destination">
-  <p>This is a super cool destination to visit.</p>
+  <p>{{country}}, {{city}} | {{startDate}} to {{endDate}} ({{totalDays}})</p>
 </template>
 
 <template name="expense">
-  <p>This is an expense!</p>
+  <p>{{name}} | {{country}}, {{city}} | {{cost}}</p>
 </template>

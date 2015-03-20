@@ -36,7 +36,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Login to your account</h4>
           </div>
           <form id="loginForm" method="POST" onsubmit="#">
@@ -59,7 +59,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Add a new destination</h4>
           </div>
           <form id="destForm" method="POST" onsubmit="#">
@@ -88,7 +88,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Add a new expense</h4>
           </div>
           <form id="destForm" method="POST" onsubmit="#">
@@ -116,9 +116,9 @@
       <h4>Nomad Planner was created after hours of fiddling with a Google spreadsheet to try and plan out my trip around the world. It's my hope that this can save you some time and frustration and get you out of the planning stages sooner and on the road!</h4>
       <h4> With this app you can quickly and easily plan out your upcoming trip, calculate a rough cost, and share your trip with friends. We'll even let you know who you can expect to cross paths with basd on other user's trips...</h4>
     </div>
-    <div id="mainDiv" class="container">
+    <div id="mainDiv" class="container main">
       <div id="statsMain" class="container">
-        <div id="statsHeader" class="container header">
+        <div id="statsHeader" class="header">
           <h3 class="mini-title">Trip Stats</h3>
         </div>
         <div id="statsList" class="container details">
@@ -181,7 +181,7 @@
 </body>
 
 <template name="destination">
-  <li>{{country}}, {{city}} | {{startDate}} to {{endDate}} ({{totalDays}})</li>
+  <li>{{country}}, {{city}} | {{dateStart}} to {{dateEnd}} | {{duration}} days</li>
 </template>
 
 <template name="expense">

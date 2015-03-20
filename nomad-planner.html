@@ -91,7 +91,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Add a new expense</h4>
           </div>
-          <form id="destForm" method="POST" onsubmit="#">
+          <form id="expenForm" class="form">
             <div class="modal-body">
               <label>Trip Leg</label>
               <input id="tripLeg" name="tripLeg" type="text" autofocus="" required><br>
@@ -99,11 +99,11 @@
               <input id="category" name="category" type="text"><br>
               <label>Description</label>
               <input id="title" name="title" type="text" required><br>
-              <label>Cost</label>
-              <input id="cost" name="cost" type="number" required><br>
+              <label>Cost $</label>
+              <input id="cost" name="cost" type="text" required><br>
             </div>
             <div class="modal-footer">
-              <button id="addDestBtn" type="submit" class="btn btn-default" data-dismiss="modal">Submit</button>
+              <button id="addExpenBtn" type="submit" class="btn btn-default">Submit</button>
             </div>
           </form>
         </div>
@@ -183,11 +183,11 @@
 </body>
 
 <template name="destination">
-  <li>{{country}}, {{city}} | {{dateStart}} to {{dateEnd}} | {{duration}} days <button id="delDest" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button></li>
+  <li>{{getCountryName country}}, {{getCityName city}} | {{formatDate dateStart "short"}} to {{formatDate dateEnd "short"}} | {{duration}} days <button id="delDest" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button></li>
 </template>
 
 <template name="expense">
-  <li>{{title}} | {{category}} | {{cost}} <button id="delExpen" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button></li>
+  <li>{{title}} | {{category}} | ${{cost}} <button id="delExpen" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button></li>
 </template>
 
 <template name="stat">

@@ -1,7 +1,6 @@
 // setup Mongo collection
 Destinations = new Mongo.Collection("destinations");
 Expenses = new Mongo.Collection("expenses");
-Statistics = new Mongo.Collection("statistics");
 Countries = new Mongo.Collection("countries");
 Cities = new Mongo.Collection("cities");
 
@@ -13,8 +12,13 @@ if (Meteor.isClient) {
     expenses: function () {
       return Expenses.find({});
     },
-    statistics: function () {
-      return Statistics.find({});
+    stats: function () {
+      return stats = [{
+        totDay: 0, // Destinations.find({}, {_id: 0, duration: 1}).length,
+        totCountry: 0, //Destinations.find({}, {$group: { _id: "$country"}}).length,
+        totFlight: 0, //Expenses.find({category: 'Flight'}).length,
+        totCost: 0
+      }];
     }
   });
 

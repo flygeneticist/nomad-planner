@@ -122,8 +122,8 @@
           <h3 class="mini-title">Trip Stats</h3>
         </div>
         <div id="statsList" class="container details">
-          {{#each statistics}}
-            {{> stats}}
+          {{#each stats}}
+            {{> stat}}
           {{/each}}
         </div>
       </div>
@@ -190,11 +190,11 @@
   <li>{{title}} | {{category}} | {{cost}} <button id="delExpen" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button></li>
 </template>
 
-<template name="stats">
+<template name="stat">
   <ul>
-    <li><b>{{totDay}}</b> Days Traveling</li>
-    <li><b>{{totCountry}}</b> Countries Visited</li>
-    <li><b>{{totFlight}}</b> Flights Taken</li>
-    <li><b>${{totCost}}</b> Spent Total</li>
+    <li>Days Traveling: <b>{{totDay}}</b></li>
+    <li>Countries Visited: <b>{{totCountry}}</b></li>
+    <li>Flights Taken: <b>{{totFlight}}</b></li>
+    <li>Total Spent: <b>${{totCost}}</b></li>
   </ul>
 </template>

@@ -62,7 +62,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Add a new destination</h4>
           </div>
-          <form id="destForm" method="POST" onsubmit="#">
+          <form id="destForm" class="form">
             <div class="modal-body">
               <label>Country</label>
               <input id="country" name="country" type="text" autofocus="" required><br>
@@ -76,7 +76,7 @@
               <input id="budget" name="budget" type="text" required><br>
             </div>
             <div class="modal-footer">
-              <button id="addDestBtn" type="submit" class="btn btn-default" data-dismiss="modal">Submit</button>
+              <button id="addDestBtn" type="submit" class="btn btn-default">Submit</button>
             </div>
           </form>
         </div>
@@ -122,7 +122,9 @@
           <h3 class="mini-title">Trip Stats</h3>
         </div>
         <div id="statsList" class="container details">
-          {{> stats}}
+          {{#each statistics}}
+            {{> stats}}
+          {{/each}}
         </div>
       </div>
       <div id="destMain" class="container">
@@ -181,18 +183,18 @@
 </body>
 
 <template name="destination">
-  <li>{{country}}, {{city}} | {{dateStart}} to {{dateEnd}} | {{duration}} days</li>
+  <li>{{country}}, {{city}} | {{dateStart}} to {{dateEnd}} | {{duration}} days <button id="delDest" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button></li>
 </template>
 
 <template name="expense">
-  <li>{{title}} | {{category}} | {{cost}}</li>
+  <li>{{title}} | {{category}} | {{cost}} <button id="delExpen" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button></li>
 </template>
 
 <template name="stats">
   <ul>
-    <li>{{totDay}}</li>
-    <li>{{totCountry}}</li>
-    <li>{{totFlight}}</li>
-    <li>{{totCost}}</li>
+    <li><b>{{totDay}}</b> Days Traveling</li>
+    <li><b>{{totCountry}}</b> Countries Visited</li>
+    <li><b>{{totFlight}}</b> Flights Taken</li>
+    <li><b>${{totCost}}</b> Spent Total</li>
   </ul>
 </template>

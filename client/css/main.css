@@ -533,3 +533,16 @@ body .header {
 div.main {
     min-height: 75%;
 }
+
+.statData {
+	font-weight: bold;
+	font-size: 2em;
+}
+
+th {
+	font-size: 1.2em;
+}
+
+td {
+	font-size: 1.2em;
+}

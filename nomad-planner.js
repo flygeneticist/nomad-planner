@@ -37,9 +37,10 @@ if (Meteor.isClient) {
       var budget = event.target.budget.value;
       var dateStart = new Date(event.target.dateStart.value);
       var dateEnd = new Date(event.target.dateEnd.value);
+      var duration = Math.floor(dateEnd - dateStart) / (1000*60*60*24);
+      var cost = calcBudgetCost(budget, city, duration);
 
-      addDestination(country, city, budget, dateStart, dateEnd);
-      var cost = calcBudgetCost(budget, city);
+      addDestination(country, city, budget, dateStart, dateEnd, duration);
       addExpense(city, cost);
 
       event.target.country.value = "";
@@ -76,20 +77,20 @@ if (Meteor.isClient) {
 }
 
 
-function addDestination (ctry, city, budget, dateStart, dateEnd) {
+function addDestination (ctry, city, budget, dateStart, dateEnd, duration) {
   Destinations.insert({
     country: ctry,
     city: city,
     budget: budget,
     dateStart: dateStart,
     dateEnd: dateEnd,
-    duration: Math.floor(dateEnd - dateStart) / (1000*60*60*24),
+    duration: duration,
     createdAt: new Date()
   });
 }
 
 function addExpense (city, cost, category, title) {
-  if (category === undefined) { category = 'base-costs'; }
+  if (category === undefined) { category = 'Base Living Costs'; }
   if (title === undefined) { title = Cities.findOne({id: city})['name']; }
   Expenses.insert({
     tripLeg: 'placeholder',
@@ -99,14 +100,14 @@ function addExpense (city, cost, category, title) {
   });
 }
 
-function calcBudgetCost (budgetLvl, cityId) {
+function calcBudgetCost (budgetLvl, cityId, duration) {
   var cost = Cities.findOne({id: cityId});
   if (budgetLvl == 'high') {
     cost = cost["costHigh"];
   } else {
     cost = cost["costLow"];
   }
-  return cost;
+  return cost*duration;
 }
 
 // Helper Functions Defined Below This Point

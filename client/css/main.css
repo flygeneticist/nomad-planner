@@ -539,10 +539,10 @@ div.main {
 	font-size: 2em;
 }
 
-th {
+th, td {
 	font-size: 1.2em;
 }
 
-td {
-	font-size: 1.2em;
+.editBtn {
+	margin-right: 10px;
 }

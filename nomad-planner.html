@@ -144,7 +144,7 @@
               <h3 class="mini-title">Destinations</h3>
             </div>
             <div class="col-md-10 media">
-              <a id="addDest" data-toggle="modal" href="#destModal" class="btn btn-success media-left media-bottom">Add</a><!--<span class="glyphicon glyphicon-plus"></span>-->
+              <a id="addDest" data-toggle="modal" href="#destModal" class="btn btn-warning media-left media-bottom">Add</a>
             </div>
           </div>
         </div>
@@ -170,7 +170,7 @@
               <h3 class="mini-title">Expenses</h3>
             </div>
             <div class="col-md-10 media">
-              <a id="addExpen" data-toggle="modal" href="#expenModal" class="btn btn-success media-left media-bottom">Add</a><!--<span class="glyphicon glyphicon-plus"></span>-->
+              <a id="addExpen" data-toggle="modal" href="#expenModal" class="btn btn-warning media-left media-bottom">Add</a>
             </div>
           </div>
         </div>
@@ -215,7 +215,7 @@
     <td>{{formatDate dateStart "short"}}</td>
     <td>{{formatDate dateEnd "short"}}</td>
     <td>{{duration}}</td>
-    <td><button id="delDest" class="btn btn-xs btn-danger">Delete</button></td>
+    <td><button id="editDest" class="btn btn-xs btn-success editBtn">Edit</button><button id="delDest" class="btn btn-xs btn-danger">Delete</button></td>
   </tr>
 </template>
 
@@ -224,7 +224,8 @@
     <td>{{title}}</td>
     <td>{{category}}</td>
     <td>${{cost}}</td>
-    <td><button id="delExpen" class="btn btn-xs btn-danger">Delete</button></td>
+
+    <td><button id="editExpen" class="btn btn-xs btn-success editBtn">Edit</button><button id="delExpen" class="btn btn-xs btn-danger">Delete</button></td>
   </tr>
 </template>
 

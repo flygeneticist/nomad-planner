@@ -1,14 +1,35 @@
 <head>
-  <title>nomad-planner</title>
+  <title>Nomad Planner</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
-
-  {{> hello}}
+    <header>
+        <nav>
+            NAV BAR, LOGO, ETC GOES IN THE HEADER!
+        </nav>
+    </header>
+    <h1>Welcome to Nomad Planner</h1>
+    <div class="container">
+        <p>Nomad Planner was created after hours of fiddling with a google spreadsheet to try and plan out my trip around the world. It's my hope that this can save you some time and frustration and get you out of the planning stages sooner and on the road!</p>
+        <p> With this app you can quickly and easily plan out your upcoming trip, calculate a rough cost, and share your trip with friends. We'll even let you know who you can expect to cross paths with basd on other user's trips...</p>
+    </div>
+    <div class="container main">
+        <div class="container destinations">
+            {{> destination}}
+        </div>
+        <div class="container expenses">
+            {{> expense}}
+        </div>
+    </div>
+    <footer>
+        LEGAL STUFF, NAV LINKS, ETC GOES IN THE FOOTER!
+    </footer>
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="destination">
+  <p>This is a super cool destination to visit.</p>
+</template>
+
+<template name="expense">
+  <p>This is an expense!</p>
 </template>

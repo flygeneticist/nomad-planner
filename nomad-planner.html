@@ -24,7 +24,7 @@
             <a class="navbar-brand" href="/">Nomad Planner</a> </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li><a data-toggle="modal" href="#loginModal" class="btn btn-default btn-sm"> Login</a></li>
+              <li><a data-toggle="modal" href="#loginModal" class="btn btn-default btn-sm">Login</a></li>
             </ul>
           </div>
         </div>
@@ -113,8 +113,8 @@
 
     <!-- Main content section -->
     <div class="container intro">
-      <h4>Nomad Planner was created after hours of fiddling with a Google spreadsheet to try and plan out my trip around the world. It's my hope that this can save you some time and frustration and get you out of the planning stages sooner and on the road!</h4>
-      <h4> With this app you can quickly and easily plan out your upcoming trip, calculate a rough cost, and share your trip with friends. We'll even let you know who you can expect to cross paths with basd on other user's trips...</h4>
+      <h4>Nomad Planner was created after hours of fiddling with a Google spreadsheet to try and plan out my own trip around the world. It's my hope that it will save you some time and frustration, get you out of the planning stages sooner, and on the road faster!</h4>
+      <h4> With this app you can quickly and easily plan out your upcoming trip, calculate a rough cost, and share your trip with friends. We'll even let you know who you can expect to cross paths with basd on other user's trips!</h4>
     </div>
     <div id="mainDiv" class="container main">
       <div id="statsMain" class="container">
@@ -133,7 +133,7 @@
             <h3 class="mini-title">Destinations</h3>
           </div>
           <div class="col-md-10 media">
-            <a id="addDest" data-toggle="modal" href="#destModal" class="btn btn-success media-left media-bottom"><span class="glyphicon glyphicon-plus"></span></a>
+            <a id="addDest" data-toggle="modal" href="#destModal" class="btn btn-success media-left media-bottom">Add</a><!--<span class="glyphicon glyphicon-plus"></span>-->
           </div>
         </div>
         <div id="destList" class="container details">
@@ -150,7 +150,7 @@
             <h3 class="mini-title">Expenses</h3>
           </div>
           <div class="col-md-10 media">
-            <a id="addExpen" data-toggle="modal" href="#expenModal" class="btn btn-success media-left media-bottom"><span class="glyphicon glyphicon-plus"></span></a>
+            <a id="addExpen" data-toggle="modal" href="#expenModal" class="btn btn-success media-left media-bottom">Add</a><!--<span class="glyphicon glyphicon-plus"></span>-->
           </div>
         </div>
         <div id="expenList" class="container details">
@@ -183,11 +183,11 @@
 </body>
 
 <template name="destination">
-  <li>{{getCountryName country}}, {{getCityName city}} | {{formatDate dateStart "short"}} to {{formatDate dateEnd "short"}} | {{duration}} days <button id="delDest" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button></li>
+  <li>{{getCountryName country}}, {{getCityName city}} | {{formatDate dateStart "short"}} to {{formatDate dateEnd "short"}} | {{duration}} days <button id="delDest" class="btn btn-xs btn-danger">Delete</button></li> <!--<span class="glyphicon glyphicon-remove-sign"></span>-->
 </template>
 
 <template name="expense">
-  <li>{{title}} | {{category}} | ${{cost}} <button id="delExpen" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button></li>
+  <li>{{title}} | {{category}} | ${{cost}} <button id="delExpen" class="btn btn-xs btn-danger">Delete</button></li> <!--<span class="glyphicon glyphicon-remove-sign"></span>-->
 </template>
 
 <template name="stat">

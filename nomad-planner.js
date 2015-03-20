@@ -15,7 +15,7 @@ if (Meteor.isClient) {
     stats: function () {
       return stats = [{
         totDay: 0, // Destinations.find({}, {_id: 0, duration: 1}).length,
-        totCountry: 0, //Destinations.find({}, {$group: { _id: "$country"}}).length,
+        totCountry: 0, //Destinations.find({}).distinct('country', true).length
         totFlight: 0, //Expenses.find({category: 'Flight'}).length,
         totCost: 0
       }];

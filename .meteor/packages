@@ -5,7 +5,8 @@
 # but you can also edit it by hand.
 
 meteor-platform
-autopublish
 insecure
 mrt:moment
 meteorhacks:aggregate
+accounts-ui
+accounts-password

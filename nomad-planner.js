@@ -16,7 +16,7 @@ if (Meteor.isClient) {
       return stats = [{
         totDay: 0, // Destinations.find({}, {_id: 0, duration: 1}).length,
         totCountry: 0, //Destinations.find({}).distinct('country', true).length
-        totFlight: 0, //Expenses.find({category: 'Flight'}).length,
+        totFlight: (Expenses.find({category: 'Flight'}).length),
         totCost: 0
       }];
     }
@@ -133,4 +133,8 @@ UI.registerHelper("getCountryName", function (ctryId) {
 
 UI.registerHelper("getCityName", function (ctyId) {
   return Cities.findOne({id: ctyId})['name'];
+});
+
+UI.registerHelper("parseCurrency", function (money) {
+  return parseFloat(money).toFixed(2);
 });

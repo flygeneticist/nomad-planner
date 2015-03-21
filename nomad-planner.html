@@ -223,7 +223,7 @@
   <tr>
     <td>{{title}}</td>
     <td>{{category}}</td>
-    <td>${{cost}}</td>
+    <td>${{parseCurrency cost}}</td>
 
     <td><button id="editExpen" class="btn btn-xs btn-success editBtn">Edit</button><button id="delExpen" class="btn btn-xs btn-danger">Delete</button></td>
   </tr>
@@ -233,5 +233,5 @@
     <td class="statData">{{totDay}}</td>
     <td class="statData">{{totCountry}}</td>
     <td class="statData">{{totFlight}}</td>
-    <td class="statData">${{totCost}}</td>
+    <td class="statData">${{parseCurrency totCost}}</td>
 </template>

@@ -10,3 +10,6 @@ mrt:moment
 meteorhacks:aggregate
 accounts-ui
 accounts-password
+accounts-facebook
+accounts-google
+accounts-twitter

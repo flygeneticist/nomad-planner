@@ -78,6 +78,10 @@ if (Meteor.isClient) {
       Expenses.remove(this._id);
     }
   });
+
+  Accounts.ui.config({
+    passwordSignupFields: "USERNAME_ONLY"
+  });
 }
 
 
@@ -89,7 +93,9 @@ function addDestination (ctry, city, budget, dateStart, dateEnd, duration) {
     dateStart: dateStart,
     dateEnd: dateEnd,
     duration: duration,
-    createdAt: new Date()
+    createdAt: new Date(),
+    owner: Meteor.userId(),
+    username: Meteor.user().username
   });
 }
 
@@ -100,7 +106,10 @@ function addExpense (city, cost, category, title) {
     tripLeg: 'placeholder',
     title: title,
     category: category,
-    cost: cost
+    cost: cost,
+    createdAt: new Date(),
+    owner: Meteor.userId(),
+    username: Meteor.user().username
   });
 }
 

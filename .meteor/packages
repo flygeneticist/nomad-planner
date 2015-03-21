@@ -8,3 +8,4 @@ meteor-platform
 autopublish
 insecure
 mrt:moment
+meteorhacks:aggregate

@@ -3,7 +3,7 @@ Destinations = new Mongo.Collection("destinations");
 Expenses = new Mongo.Collection("expenses");
 Countries = new Mongo.Collection("countries");
 Cities = new Mongo.Collection("cities");
-
+Categories = new Mongo.Collection("categories");
 
 if (Meteor.isServer) {
   Meteor.publish("destinations", function () {
@@ -12,6 +12,18 @@ if (Meteor.isServer) {
 
   Meteor.publish("expenses", function () {
     return Expenses.find({});
+  });
+
+  Meteor.publish("countries", function () {
+    return Countries.find({}, {sort: {name: 1}});
+  });
+
+  Meteor.publish("cities", function () {
+    return Cities.find({}, {sort: {name: 1}});
+  });
+
+  Meteor.publish("categories", function () {
+    return Categories.find({}, {sort: {name: 1}});
   });
 
   // Meteor.publish("stats", function (){
@@ -32,6 +44,9 @@ if (Meteor.isServer) {
 if (Meteor.isClient) {
   Meteor.subscribe("destinations");
   Meteor.subscribe("expenses");
+  Meteor.subscribe("countries");
+  Meteor.subscribe("cities");
+  Meteor.subscribe("categories");
   // Meteor.subscribe("stats");
 
   Template.body.helpers({
@@ -41,12 +56,21 @@ if (Meteor.isClient) {
     expenses: function () {
       return Expenses.find({});
     },
+    categories: function () {
+      return Categories.find({});
+    },
+    countries: function () {
+      return Countries.find({});
+    },
+    cities: function () {
+      return Cities.find({});
+    },
     stats: function () {
       return stats = [{
-        totDay: statDay, // Destinations.find({}, {_id: 0, duration: 1}).length,
-        totCountry: statCtry, //Destinations.find({}).distinct('country', true).length
+        totDay: 0, // Destinations.find({}, {_id: 0, duration: 1}).length,
+        totCountry: 0, //Destinations.find({}).distinct('country', true).length
         totFlight: Expenses.find({category: 'Flight'}).count(),
-        totCost: statCost
+        totCost: 0
       }];
     }
   });
@@ -67,10 +91,11 @@ if (Meteor.isClient) {
       var dateStart = new Date(event.target.dateStart.value);
       var dateEnd = new Date(event.target.dateEnd.value);
       var duration = Math.floor(dateEnd - dateStart) / (1000*60*60*24);
-      var cost = calcBudgetCost(budget, city, duration);
-
       Meteor.call("addDestination", country, city, budget, dateStart, dateEnd, duration);
-      Meteor.call("addExpense", city, cost);
+
+      var tripLegId = Destinations.findOne({country: country, city: city, budget: budget})['_id'];
+      var cost = calcBudgetCost(budget, city, duration);
+      Meteor.call("addExpense", city, cost, tripLegId);
 
       event.target.country.value = "";
       event.target.city.value = "";
@@ -85,8 +110,9 @@ if (Meteor.isClient) {
       var cost = parseFloat(event.target.cost.value).toFixed(2);
       var category = event.target.category.value;
       var title = event.target.title.value;
+      var tripLegId = event.target.tripLeg.value;
 
-      Meteor.call("addExpense", city, cost, category, title);
+      Meteor.call("addExpense", city, cost, tripLegId, category, title);
 
       event.target.city.value = "";
       event.target.cost.value = "";
@@ -111,7 +137,8 @@ if (Meteor.isClient) {
   // Helper Functions Defined Below This Point
   var DateFormats = {
          short: "MMMM DD, YYYY",
-         long: "dddd MM.DD.YYYY HH:mm"
+         long: "dddd MM.DD.YY HH:mm",
+         superShort: "M.D.YY"
   };
 
   UI.registerHelper("formatDate", function (datetime, format) {
@@ -126,11 +153,11 @@ if (Meteor.isClient) {
   });
 
   UI.registerHelper("getCountryName", function (ctryId) {
-    return Meteor.call("longCtryName", ctryId);
+    return Countries.findOne({id: ctryId})['name'];
   });
 
   UI.registerHelper("getCityName", function (cityId) {
-    return Meteor.call("longCityName", cityId);
+    return Cities.findOne({id: cityId})['name'];
   });
 
   UI.registerHelper("parseCurrency", function (money) {
@@ -153,11 +180,11 @@ Meteor.methods({
     });
   },
 
-  addExpense:function (city, cost, category, title) {
+  addExpense:function (city, cost, tripLegId, category, title) {
     if (category === undefined) { category = 'Base Living Costs'; }
     if (title === undefined) { title = Cities.findOne({id: city})['name']; }
     Expenses.insert({
-      tripLeg: 'placeholder',
+      tripLeg: tripLegId,
       title: title,
       category: category,
       cost: cost,
@@ -167,7 +194,17 @@ Meteor.methods({
     });
   },
 
-  calcBudgetCost: function (budgetLvl, cityId, duration) {
+  delDest: function (taskId) {
+    Destinations.remove(taskId);
+  },
+
+  delExpen: function (taskId) {
+    Expenses.remove(taskId);
+  }
+});
+
+
+function calcBudgetCost (budgetLvl, cityId, duration) {
     var cost = Cities.findOne({id: cityId});
     if (budgetLvl == 'high') {
       cost = cost["costHigh"];
@@ -175,21 +212,4 @@ Meteor.methods({
       cost = cost["costLow"];
     }
     return cost*duration;
-  },
-
-  delDest: function (taskId) {
-    Destinations.remove(taskId);
-  },
-
-  delExpen: function (taskId) {
-    Expenses.remove(taskId);
-  },
-
-  longCtryName: function (id) {
-    return Countries.findOne({id: id})['name'];
-  },
-
-  longCityName: function (id) {
-    return Cities.findOne({id: id})['name'];
-  }
-});
+}

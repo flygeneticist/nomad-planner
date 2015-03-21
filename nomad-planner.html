@@ -42,15 +42,27 @@
         <form id="destForm" class="form">
           <div class="modal-body">
             <label>Country</label>
-            <input id="country" name="country" type="text" autofocus="" required><br>
+            <select id="country" name="country" type="text" autofocus="" required>
+              {{#each countries}}
+                <option value="{{id}}">{{name}}</option>
+              {{/each}}
+            </select><br>
             <label>City</label>
-            <input id="city" name="city" type="text" required><br>
+            <select id="city" name="city" type="text" required>
+              {{#each cities}}
+                <option value="{{id}}">{{name}}</option>
+              {{/each}}
+            </select><br>
             <label>Start Date</label>
             <input id="dateStart" name="dateStart" type="date" required><br>
             <label>End Date</label>
             <input id="dateEnd" name="dateEnd" type="date" required><br>
-            <label>Budget Level</label>
-            <input id="budget" name="budget" type="text" required><br>
+            <label>Budget Type</label>
+            <select id="budget" name="budget" type="text" required>
+                <option value="high">I like things very comfortable.</option>
+                <option value="low">Bootstrapping Entrepreneur</option>
+                <option value="low">Extending the runway</option>
+            </select><br>
           </div>
           <div class="modal-footer">
             <button id="addDestBtn" type="submit" class="btn btn-default">Submit</button>
@@ -71,9 +83,17 @@
         <form id="expenForm" class="form">
           <div class="modal-body">
             <label>Trip Leg</label>
-            <input id="tripLeg" name="tripLeg" type="text" autofocus="" required><br>
+            <select id="tripLeg" name="tripLeg" type="text" autofocus="" required>
+              {{#each destinations}}
+                <option value="{{_id}}">{{getCityName city}} - {{formatDate dateStart "superShort"}}</option>
+              {{/each}}
+            </select><br>
             <label>Category</label>
-            <input id="category" name="category" type="text"><br>
+            <select id="category" name="category" type="text">
+              {{#each categories}}
+                <option value="{{name}}">{{name}}</option>
+              {{/each}}
+            </select><br>
             <label>Description</label>
             <input id="title" name="title" type="text" required><br>
             <label>Cost $</label>

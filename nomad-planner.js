@@ -13,11 +13,15 @@ if (Meteor.isClient) {
       return Expenses.find({});
     },
     stats: function () {
+      var statDay = Destinations.aggregate([{$group: {_id: null, totalDay: {$sum: "$duration"}}}]);
+      var statCtry = Destinations.aggregate([{$group: {_id: {country: "$country"}, count: {$sum: 1}}}]);
+      var statCost = Expenses.aggregate([{$group: {_id: null, totalCost: {$sum: "$cost"}}}]);
+
       return stats = [{
-        totDay: 0, // Destinations.find({}, {_id: 0, duration: 1}).length,
-        totCountry: 0, //Destinations.find({}).distinct('country', true).length
-        totFlight: (Expenses.find({category: 'Flight'}).length),
-        totCost: 0
+        totDay: statDay, // Destinations.find({}, {_id: 0, duration: 1}).length,
+        totCountry: statCtry, //Destinations.find({}).distinct('country', true).length
+        totFlight: Expenses.find({category: 'Flight'}).count(),
+        totCost: statCost
       }];
     }
   });

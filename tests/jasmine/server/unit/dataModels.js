@@ -27,3 +27,37 @@ describe("City", function () {
         expect(city.active).toBe(false);
     });
 });
+
+describe("Destination", function () {
+    it("should be created with a country,city,dateStart,dateEnd,duration", function (){
+        spyOn(Destinations, "insert").and.callFake(function (doc, callback) {
+            callback(null, "1");
+        });
+        var destination = new Destination(null, "Thailand", "Chiang Mai", "12/01/2015", "12/31/2015");
+        expect(destination.city).toBe("Chiang Mai");
+        expect(destination.dateStart).toEqual(new Date("12/01/2015"));
+        expect(destination.dateEnd).toEqual(new Date("12/31/2015"));
+        expect(destination.duration).toBe(30); // calculated from start and end dates
+    });
+});
+
+describe("Expense", function () {
+    it("should be created with a tripLeg,category,cost,title", function (){
+        spyOn(Expenses, "insert").and.callFake(function (doc, callback) {
+            callback(null, "1");
+        });
+        var expense = new Expense(null, "1234", "Flight", "235.56", "BKK to PAR");
+        expect(expense.tripLeg).toEqual("1234");
+        expect(expense.cost).toBe(235.56);
+        expect(expense.title).toEqual("BKK to PAR");
+        expect(expense.category).toEqual("Flight");
+    });
+    // it("should have default category if none given", function (){
+    //     spyOn(Destinations, "insert").and.callFake(function (doc, callback) {
+    //         callback(null, "1");
+    //     });
+    //     var expense = new Expense(null,"general", "235.56", "Flight", "BKK to PAR");
+        // expect(expense.title).toBe("Base Living Costs");
+        // expect(expense.category).toBe("Base Living Costs");
+    // });
+});

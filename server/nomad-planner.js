@@ -56,8 +56,7 @@ Meteor.methods({
       category: category,
       cost: parseFloat(cost),
       createdAt: new Date(),
-      owner: Meteor.userId(),
-      username: Meteor.user().username
+      user: Meteor.user().username
     });
   },
 

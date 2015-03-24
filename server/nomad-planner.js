@@ -34,11 +34,10 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  addDestination: function (ctry, city, budget, dateStart, dateEnd, duration) {
+  addDestination: function (ctry, city, dateStart, dateEnd, duration) {
     Destinations.insert({
       country: ctry,
       city: city,
-      budget: budget,
       dateStart: dateStart,
       dateEnd: dateEnd,
       duration: duration,

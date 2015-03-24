@@ -43,14 +43,13 @@ Template.body.events({
   'submit #destForm': function (event) {
     var country = parseInt(event.target.country.value);
     var city = parseInt(event.target.city.value);
-    var budget = event.target.budget.value;
     var dateStart = new Date(event.target.dateStart.value);
     var dateEnd = new Date(event.target.dateEnd.value);
     var duration = Math.floor(dateEnd - dateStart) / (1000*60*60*24);
-    Meteor.call("addDestination", country, city, budget, dateStart, dateEnd, duration);
+    Meteor.call("addDestination", country, city, dateStart, dateEnd, duration);
 
     var tripLegId = Meteor.call("findOneDest", country, city, budget);
-    var cost = calcBudgetCost(budget, city, duration);
+    var cost = calcBudgetCost(city, duration);
     Meteor.call("addExpense", city, cost, tripLegId);
 
     event.target.country.value = "";
@@ -121,12 +120,12 @@ UI.registerHelper("parseCurrency", function (money) {
 });
 
 // helper function for cost calculation with the selected budget
-function calcBudgetCost (budgetLvl, cityId, duration) {
+function calcBudgetCost (cityId, duration) {
     var cost = Cities.findOne({id: cityId});
-    if (budgetLvl == 'high') {
-      cost = cost["costHigh"];
+    if (duration >= 275) {
+      cost = cost["expat"];
     } else {
-      cost = cost["costLow"];
+      cost = cost["nomad"];
     }
-    return cost*duration;
+    return cost;
 }

@@ -4,8 +4,13 @@ html, button, input, select, textarea {
 body {
 	font-size: 1em;
 	line-height: 1.4;
-	padding-top: 70px;
 }
+
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
 
 ::-moz-selection {
  background: #f2c2c9;
@@ -70,7 +75,7 @@ body {
 	margin-left: -15px;
 }
 .modal-header {
-	background: #2b2b2b;
+	background: #ffbf00;
 }
 .modal-header h4 {
 	color: white;
@@ -505,8 +510,6 @@ ul.social-buttons li a:hover, ul.social-buttons li a:focus, ul.social-buttons li
 /* ==========================================================================
    MEDIA QUERIES
    ========================================================================== */
-
-
 @media screen and (max-width:1050px), screen and (max-device-width:1050px) {
 body .header {
 	background-attachment: scroll;
@@ -530,6 +533,9 @@ body .header {
 }
 }
 
+/* ==========================================================================
+   MISC CUSTOM CSS
+   ========================================================================== */
 div.main {
     min-height: 75%;
 }

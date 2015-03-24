@@ -41,20 +41,19 @@ Template.body.events({
   // },
 
   'submit #destForm': function (event) {
-    var country = parseInt(event.target.country.value);
-    var city = parseInt(event.target.city.value);
+    var country = event.target.country.value;
+    var city = event.target.city.value;
     var dateStart = new Date(event.target.dateStart.value);
     var dateEnd = new Date(event.target.dateEnd.value);
     var duration = Math.floor(dateEnd - dateStart) / (1000*60*60*24);
     Meteor.call("addDestination", country, city, dateStart, dateEnd, duration);
 
-    var tripLegId = Meteor.call("findOneDest", country, city, budget);
-    var cost = calcBudgetCost(city, duration);
+    var cost = calcCost(city, duration);
+    var tripLegId = Meteor.call("findOneDest", country, city, duration, Meteor.userId());
     Meteor.call("addExpense", city, cost, tripLegId);
 
     event.target.country.value = "";
     event.target.city.value = "";
-    event.target.budget.value = "";
     event.target.dateStart.value = "";
     event.target.dateEnd.value = "";
     return false;
@@ -107,25 +106,15 @@ UI.registerHelper("formatDate", function (datetime, format) {
   }
 });
 
-UI.registerHelper("getCountryName", function (ctryId) {
-  return Countries.findOne({id: ctryId})['name'];
-});
-
-UI.registerHelper("getCityName", function (cityId) {
-  return Cities.findOne({id: cityId})['name'];
-});
-
 UI.registerHelper("parseCurrency", function (money) {
   return parseFloat(money).toFixed(2);
 });
 
-// helper function for cost calculation with the selected budget
-function calcBudgetCost (cityId, duration) {
-    var cost = Cities.findOne({id: cityId});
-    if (duration >= 275) {
-      cost = cost["expat"];
-    } else {
-      cost = cost["nomad"];
-    }
-    return cost;
+// helper function for cost calculation with the given duration
+function calcCost (city, duration) {
+    var cost = Cities.findOne({city: city});
+    if (duration >= 365) { cost = cost["expat"]; }
+    else if (duration >= 60) { cost = cost["nomadApartment"]/30; }
+    else { cost = cost["hostel"]; }
+    return cost*duration;
 }

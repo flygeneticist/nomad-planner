@@ -4,7 +4,7 @@ if (Meteor.isServer) {
   });
 
   Meteor.publish("expenses", function () {
-    return Expenses.find({});
+    return Expenses.find({}, {sort: {tripLeg: 1, category: 1}});
   });
 
   Meteor.publish("countries", function () {
@@ -12,7 +12,7 @@ if (Meteor.isServer) {
   });
 
   Meteor.publish("cities", function () {
-    return Cities.find({}, {sort: {name: 1}});
+    return Cities.find({}, {sort: {city: 1}});
   });
 
   Meteor.publish("categories", function () {
@@ -34,10 +34,10 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  addDestination: function (ctry, city, dateStart, dateEnd, duration) {
+  addDestination: function (country, cityId, dateStart, dateEnd, duration) {
     Destinations.insert({
-      country: ctry,
-      city: city,
+      country: country,
+      city: cityId,
       dateStart: dateStart,
       dateEnd: dateEnd,
       duration: duration,
@@ -49,7 +49,7 @@ Meteor.methods({
 
   addExpense:function (city, cost, tripLegId, category, title) {
     if (category === undefined) { category = 'Base Living Costs'; }
-    if (title === undefined) { title = Cities.findOne({id: city})['name']; }
+    if (title === undefined) { title = Cities.findOne({city: city})['city']; }
     Expenses.insert({
       tripLeg: tripLegId,
       title: title,
@@ -69,7 +69,7 @@ Meteor.methods({
     Expenses.remove(taskId);
   },
 
-  findOneDest: function (ctry, cty, bdgt) {
-    Destinations.findOne({country: ctry, city: cty, budget: bdgt})['_id'];
+  findOneDest: function (ctry, cty, duration, user) {
+    Destinations.findOne({country: ctry, city: cty, duration: duration, owner: user})['_id'];
   }
 });

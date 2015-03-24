@@ -26,7 +26,7 @@ Template.body.helpers({
       totDay: 0, // Destinations.find({}, {_id: 0, duration: 1}).length,
       totCountry: 0, //Destinations.find({}).distinct('country', true).length
       totFlight: Expenses.find({category: 'Flight'}).count(),
-      totCost: 0
+      totCost: 0 //Meteor.call("totCost")
     }];
   }
 });
@@ -113,8 +113,14 @@ UI.registerHelper("parseCurrency", function (money) {
 // helper function for cost calculation with the given duration
 function calcCost (city, duration) {
     var cost = Cities.findOne({city: city});
-    if (duration >= 365) { cost = cost["expat"]; }
-    else if (duration >= 60) { cost = cost["nomadApartment"]/30; }
-    else { cost = cost["hostel"]; }
-    return cost*duration;
+    var months = parseInt(duration/30);
+    var remainder = duration%30;
+    var total = 0;
+
+    if (duration >= 275) { total = cost["expat"]*months;
+    } else if (duration >= 60) {
+      total = cost["nomadApartment"]*months;
+    } else {
+      total = cost["hostel"]*duration; }
+    return total;
 }

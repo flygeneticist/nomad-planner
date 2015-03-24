@@ -54,7 +54,7 @@ Meteor.methods({
       tripLeg: tripLegId,
       title: title,
       category: category,
-      cost: cost,
+      cost: parseFloat(cost),
       createdAt: new Date(),
       owner: Meteor.userId(),
       username: Meteor.user().username

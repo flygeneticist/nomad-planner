@@ -78,6 +78,7 @@
           <div class="modal-body">
             <label>Trip Leg</label>
             <select id="tripLeg" name="tripLeg" type="text" autofocus="" required>
+                <option value="generalExp">General Expense</option>
               {{#each destinations}}
                 <option value="{{id}}">{{city}} - {{formatDate dateStart "superShort"}}</option>
               {{/each}}

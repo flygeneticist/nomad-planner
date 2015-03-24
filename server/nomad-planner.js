@@ -1,0 +1,76 @@
+if (Meteor.isServer) {
+  Meteor.publish("destinations", function () {
+    return Destinations.find({}, {sort: {dateStart: 1}});
+  });
+
+  Meteor.publish("expenses", function () {
+    return Expenses.find({});
+  });
+
+  Meteor.publish("countries", function () {
+    return Countries.find({}, {sort: {name: 1}});
+  });
+
+  Meteor.publish("cities", function () {
+    return Cities.find({}, {sort: {name: 1}});
+  });
+
+  Meteor.publish("categories", function () {
+    return Categories.find({}, {sort: {name: 1}});
+  });
+
+  // Meteor.publish("stats", function (){
+  //   var statDay = Destinations.aggregate([{$group: {_id: null, totalDay: {$sum: "$duration"}}}]);
+  //   var statCtry = Destinations.aggregate([{$group: {_id: {country: "$country"}, count: {$sum: 1}}}]);
+  //   var statCost = Expenses.aggregate([{$group: {_id: null, totalCost: {$sum: "$cost"}}}]);
+
+  //   return stats = [{
+  //     totDay: statDay, // Destinations.find({}, {_id: 0, duration: 1}).length,
+  //     totCountry: statCtry, //Destinations.find({}).distinct('country', true).length
+  //     totFlight: Expenses.find({category: 'Flight'}).count(),
+  //     totCost: statCost
+  //   }];
+  // });
+}
+
+Meteor.methods({
+  addDestination: function (ctry, city, budget, dateStart, dateEnd, duration) {
+    Destinations.insert({
+      country: ctry,
+      city: city,
+      budget: budget,
+      dateStart: dateStart,
+      dateEnd: dateEnd,
+      duration: duration,
+      createdAt: new Date(),
+      owner: Meteor.userId(),
+      username: Meteor.user().username
+    });
+  },
+
+  addExpense:function (city, cost, tripLegId, category, title) {
+    if (category === undefined) { category = 'Base Living Costs'; }
+    if (title === undefined) { title = Cities.findOne({id: city})['name']; }
+    Expenses.insert({
+      tripLeg: tripLegId,
+      title: title,
+      category: category,
+      cost: cost,
+      createdAt: new Date(),
+      owner: Meteor.userId(),
+      username: Meteor.user().username
+    });
+  },
+
+  delDest: function (taskId) {
+    Destinations.remove(taskId);
+  },
+
+  delExpen: function (taskId) {
+    Expenses.remove(taskId);
+  },
+
+  findOneDest: function (ctry, cty, bdgt) {
+    Destinations.findOne({country: ctry, city: cty, budget: bdgt})['_id'];
+  }
+});

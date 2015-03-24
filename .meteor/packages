@@ -12,3 +12,5 @@ accounts-password
 accounts-facebook
 accounts-google
 accounts-twitter
+sanjo:jasmine
+velocity:html-reporter

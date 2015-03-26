@@ -11,8 +11,9 @@ if (Meteor.isServer) {
     return Countries.find({}, {sort: {name: 1}});
   });
 
-  Meteor.publish("cities", function () {
-    return Cities.find({}, {sort: {city: 1}});
+  Meteor.publish("cities", function (ctry) {
+    ctry = typeof ctry !== "undefined" ? ctry : "Thailand";
+    return Cities.find({active: true, country: ctry}, {sort: {city: 1}});
   });
 
   Meteor.publish("categories", function () {

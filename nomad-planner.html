@@ -42,13 +42,13 @@
         <form id="destForm" class="form">
           <div class="modal-body">
             <label>Country</label>
-            <select id="country" name="country" type="text" autofocus="" required>
+            <select id="countryPicker" class="selectpicker" name="country" type="text" autofocus="" required>
               {{#each countries}}
                 <option value="{{name}}">{{name}}</option>
               {{/each}}
             </select><br>
             <label>City</label>
-            <select id="city" name="city" type="text" required>
+            <select id="cityPicker" name="city" type="text" required>
               {{#each cities}}
                 <option value="{{id}}">{{city}}</option>
               {{/each}}

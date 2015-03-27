@@ -1,38 +1,35 @@
-if (Meteor.isServer) {
-  Meteor.publish("destinations", function () {
-    return Destinations.find({}, {sort: {dateStart: 1}});
-  });
+Meteor.publish("destinations", function () {
+  return Destinations.find({}, {sort: {dateStart: 1}});
+});
 
-  Meteor.publish("expenses", function () {
-    return Expenses.find({}, {sort: {tripLeg: 1, category: 1}});
-  });
+Meteor.publish("expenses", function () {
+  return Expenses.find({}, {sort: {tripLeg: 1, category: 1}});
+});
 
-  Meteor.publish("countries", function () {
-    return Countries.find({}, {sort: {name: 1}});
-  });
+Meteor.publish("countries", function () {
+  return Countries.find({}, {sort: {name: 1}});
+});
 
-  Meteor.publish("cities", function (ctry) {
-    ctry = typeof ctry !== "undefined" ? ctry : "Thailand";
-    return Cities.find({active: true, country: ctry}, {sort: {city: 1}});
-  });
+Meteor.publish("cities", function () {
+  return Cities.find({active: true});
+});
 
-  Meteor.publish("categories", function () {
-    return Categories.find({}, {sort: {name: 1}});
-  });
+Meteor.publish("categories", function () {
+  return Categories.find({}, {sort: {name: 1}});
+});
 
-  // Meteor.publish("stats", function (){
-  //   var statDay = Destinations.aggregate([{$group: {_id: null, totalDay: {$sum: "$duration"}}}]);
-  //   var statCtry = Destinations.aggregate([{$group: {_id: {country: "$country"}, count: {$sum: 1}}}]);
-  //   var statCost = Expenses.aggregate([{$group: {_id: null, totalCost: {$sum: "$cost"}}}]);
+// Meteor.publish("stats", function (){
+//   var statDay = Destinations.aggregate([{$group: {_id: null, totalDay: {$sum: "$duration"}}}]);
+//   var statCtry = Destinations.aggregate([{$group: {_id: {country: "$country"}, count: {$sum: 1}}}]);
+//   var statCost = Expenses.aggregate([{$group: {_id: null, totalCost: {$sum: "$cost"}}}]);
 
-  //   return stats = [{
-  //     totDay: statDay, // Destinations.find({}, {_id: 0, duration: 1}).length,
-  //     totCountry: statCtry, //Destinations.find({}).distinct('country', true).length
-  //     totFlight: Expenses.find({category: 'Flight'}).count(),
-  //     totCost: statCost
-  //   }];
-  // });
-}
+//   return stats = [{
+//     totDay: statDay, // Destinations.find({}, {_id: 0, duration: 1}).length,
+//     totCountry: statCtry, //Destinations.find({}).distinct('country', true).length
+//     totFlight: Expenses.find({category: 'Flight'}).count(),
+//     totCost: statCost
+//   }];
+// });
 
 Meteor.methods({
   addDestination: function (country, cityId, dateStart, dateEnd, duration) {

@@ -1,9 +1,11 @@
-Meteor.subscribe("destinations");
-Meteor.subscribe("expenses");
-Meteor.subscribe("countries");
-Meteor.subscribe("cities");
-Meteor.subscribe("categories");
-// Meteor.subscribe("stats");
+Tracker.autorun(function () {
+  Meteor.subscribe("destinations");
+  Meteor.subscribe("expenses");
+  Meteor.subscribe("countries");
+  Meteor.subscribe("cities", Session.get("selectedCtry"));
+  Meteor.subscribe("categories");
+  // Meteor.subscribe("stats");
+});
 
 Template.body.helpers({
   destinations: function () {
@@ -19,7 +21,11 @@ Template.body.helpers({
     return Countries.find({});
   },
   cities: function () {
-    return Cities.find({});
+    if (typeof Session.get("selectedCtry") !== "undefined") {
+      return Cities.find({country: Session.get("selectedCtry")}, {sort: {city: 1}});
+    } else {
+      return Cities.find({country: "Argentina"}, {sort: {city: 1}});
+    }
   },
   stats: function () {
     return stats = [{
@@ -36,9 +42,10 @@ Template.body.events({
   //   // increment the counter when button is clicked
   //   Session.set('counter', Session.get('counter') + 1);
   // }
-  // 'onchange #country': function () {
-  //   console.log(event.target.country.value);
-  // },
+  'change #countryPicker': function (event) {
+    var newCtry = $(event.target).val();
+    Session.set('selectedCtry', newCtry);
+  },
 
   'submit #destForm': function (event) {
     var country = event.target.country.value;

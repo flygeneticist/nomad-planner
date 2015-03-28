@@ -40,8 +40,7 @@ Meteor.methods({
       dateEnd: dateEnd,
       duration: duration,
       createdAt: new Date(),
-      owner: Meteor.userId(),
-      username: Meteor.user().username
+      user: Meteor.user()
     });
   },
 
@@ -54,7 +53,7 @@ Meteor.methods({
       category: category,
       cost: parseFloat(cost),
       createdAt: new Date(),
-      user: Meteor.user().username
+      user: Meteor.user()
     });
   },
 
@@ -67,6 +66,6 @@ Meteor.methods({
   },
 
   findOneDest: function (ctry, cty, duration, user) {
-    Destinations.findOne({country: ctry, city: cty, duration: duration, owner: user})['_id'];
+    Destinations.findOne({country: ctry, city: cty, duration: duration, user: user})['_id'];
   }
 });

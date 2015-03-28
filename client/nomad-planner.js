@@ -47,16 +47,6 @@ Template.body.events({
     Session.set('selectedCtry', newCtry);
   },
 
-  'change #dateEnd': function (event) {
-    var newDate = $(event.target).val();
-    Session.set('selectedCtry', newCtry);
-  },
-
-  'change #dateStart': function (event) {
-    var newDate = $(event.target).val();
-    Session.set('selectedCtry', newCtry);
-  },
-
   'submit #destForm': function (event) {
     var country = event.target.country.value;
     var city = event.target.city.value;
@@ -66,14 +56,13 @@ Template.body.events({
     Meteor.call("addDestination", country, city, dateStart, dateEnd, duration);
 
     var cost = calcCost(city, duration);
-    var tripLegId = Meteor.call("findOneDest", country, city, duration, Meteor.userId());
+    var tripLegId = Meteor.call("findOneDest", country, city, duration, Meteor.user());
     Meteor.call("addExpense", city, cost, tripLegId);
 
     event.target.country.value = "";
     event.target.city.value = "";
     event.target.dateStart.value = "";
     event.target.dateEnd.value = "";
-    Session.set("selectedCtry", undefined);
     return false;
   },
 

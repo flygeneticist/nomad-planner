@@ -47,6 +47,16 @@ Template.body.events({
     Session.set('selectedCtry', newCtry);
   },
 
+  'change #dateEnd': function (event) {
+    var newDate = $(event.target).val();
+    Session.set('selectedCtry', newCtry);
+  },
+
+  'change #dateStart': function (event) {
+    var newDate = $(event.target).val();
+    Session.set('selectedCtry', newCtry);
+  },
+
   'submit #destForm': function (event) {
     var country = event.target.country.value;
     var city = event.target.city.value;
@@ -63,6 +73,7 @@ Template.body.events({
     event.target.city.value = "";
     event.target.dateStart.value = "";
     event.target.dateEnd.value = "";
+    Session.set("selectedCtry", undefined);
     return false;
   },
 

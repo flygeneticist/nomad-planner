@@ -1,5 +1,4 @@
 wireframe_app.xcf
 public/node_modules
 .meteor/local
-tests/jasmine/server/unit/package-stubs.js
-tests/jasmine/server/unit/packageMocksSpec.js
+tests
